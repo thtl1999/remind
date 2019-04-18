@@ -81,3 +81,34 @@ server.listen(8080, function() {
   console.log('서버 실행 중..')
 })
 
+
+var mongoose = require('mongoose');
+
+// [ CONFIGURE mongoose ]
+
+// CONNECT TO MONGODB SERVER
+var db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', function(){
+    // CONNECTED TO MONGODB SERVER
+    console.log("Connected to mongod server");
+});
+
+mongoose.connect('mongodb://localhost/remind');
+
+var Word = require('./models/word');
+//var router = require('./router')(app, Book);
+
+function Getaword(){
+  Word.count(function(err, count){
+    if(err) console.log('get a word error: count');
+    var rand = Math.floor(Math.random() * count);
+    Word.findOne().skip(rand).exec(
+      function (err, result){
+        console.log(result);
+        return result;
+      })
+  })
+}
+
+Getaword();
