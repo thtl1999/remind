@@ -1,6 +1,14 @@
 ﻿#RE:MIND
 
+#Server
+npm install		//newly install library
 
+node refreshdb.js		//refresh db
+
+node app.js		//start server
+
+#Client
+access to 127.0.0.1:8080 at the browser
 
 #Node source from
 
