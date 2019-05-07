@@ -112,3 +112,14 @@ function Getaword(){
 }
 
 Getaword();
+
+const twitch = require('./router/twitchconfig');
+
+const twitchclient = twitch.create('saddummy');
+
+twitchclient.connect();
+
+twitchclient.on('chat', (channel, userstate, message, self) => {
+  var t = message;
+  console.log(t);
+});
