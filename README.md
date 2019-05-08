@@ -1,5 +1,6 @@
 # RE:MIND
-
+RE:MIND is drawing quiz game that support streaming chat service like YouTube and Twitch.
+Draw a word with creative way. Guess a word for points. But, becareful! Similar answers can be negative points.
 ## How to run
 - Install MongoDB, Node.js
 
