@@ -115,7 +115,7 @@ Getaword();
 
 const twitch = require('./router/twitchconfig');
 
-function connecttwitch(userid)
+function connecttwitch(userid,roomid,answerword)
 {
     var twitchclient = twitch.create(userid);
 
@@ -126,41 +126,51 @@ function connecttwitch(userid)
     var user = userstate.username;
     var msg = message.trim();
     console.log(user + ':' + msg);
+    if (msg == answerword){
+      //some function with roomid
+      twitchclient.disconnect();
+    }
+    
   });
 }
 
 
 var users = [];
 
-//users[3] = connecttwitch('elded');
-//users[6] = connecttwitch('yumyumyu77');
+//users['3'] = connecttwitch('elded');
+users['6'] = connecttwitch('hanryang1125',345,'ㅠㅠ');
 
 
 const youtube = require('./router/youtubeconfig');
 
-function connectyoutube(videoid)
+function connectyoutube(videoid,roomid,answerword)
 {
-  var youtubeclient = youtube.create(videoid,function(config){
+  youtube.create(videoid,function(config){
 
-    setInterval(function(){
-      //console.log('working');
-      //console.log(config);
-  
-      youtube.getchat(config,function(chatlist){
+    var lasttime = 0;
 
-        console.log(chatlist);
+    var intervalid = setInterval(function(){
+      youtube.getchat(config,lasttime,function(chatlist,t){
+      //console.log(chatlist);
+      //console.log(t);
+      lasttime = t;
+      chatlist.forEach(element => {
+        console.log(element.msg);
+        if (element.msg == answerword){
+          //somefunction with room id
+          clearInterval(intervalid);
+        }  
+      });
 
       });
-      
-  
     },2000)
 
   });
-
-  
-
-
   
 }
 
-users[8] = connectyoutube('W9jr3QypVCg');
+//users['123'] = connectyoutube('W9jr3QypVCg',123,'ㅇㅇ');
+
+
+
+

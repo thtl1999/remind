@@ -12,7 +12,7 @@ const videogetbody = {
 const chatgetbody = {
     liveChatId: '',
     part: 'snippet,authorDetails',
-    maxResults: '200',
+    maxResults: '200',  //minimum is 200
     key: ''
 };
 
@@ -47,16 +47,24 @@ module.exports = {
         })
     },
 
-    getchat: function(chatgetconfig, callback){
+    getchat: function(chatgetconfig, lasttime, callback){
         request(chatgetconfig, function (error, res, data){
             var chatitems = data.items;
             var chatlist = [];
 
             for(var item in chatitems){
                 try{
-                    var message = chatitems[item].snippet.textMessageDetails.messageText;
-                    var author = chatitems[item].authorDetails.displayName;
-                    chatlist.push({msg:message,author:author});
+
+                    var msgtime = Date.parse(chatitems[item].snippet.publishedAt);
+                    if (msgtime > lasttime)
+                    {
+                        var message = chatitems[item].snippet.textMessageDetails.messageText;
+                        var author = chatitems[item].authorDetails.displayName;
+                        chatlist.push({msg:message,author:author});
+                        lasttime = msgtime;
+                    }
+
+                    
                 }
                 catch (e){
                     //console.log(e);
@@ -64,7 +72,8 @@ module.exports = {
                 
             }
             //console.log(chatlist);
-            callback(chatlist);
+            callback(chatlist,lasttime);
+            return lasttime;
         })
     }
 
