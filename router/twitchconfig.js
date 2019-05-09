@@ -3,7 +3,7 @@ const fs = require('fs');
 
 
 var twitchconfig = {
-    options: {debug: true},
+    options: {debug: false},
     connection: {cluster: 'aws', reconnect: true},
     identity: {
     username: "RemindChatBot"

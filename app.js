@@ -115,11 +115,52 @@ Getaword();
 
 const twitch = require('./router/twitchconfig');
 
-const twitchclient = twitch.create('saddummy');
+function connecttwitch(userid)
+{
+    var twitchclient = twitch.create(userid);
 
-twitchclient.connect();
+  twitchclient.connect();
 
-twitchclient.on('chat', (channel, userstate, message, self) => {
-  var t = message;
-  console.log(t);
-});
+
+  twitchclient.on('chat', (channel, userstate, message, self) => {
+    var user = userstate.username;
+    var msg = message.trim();
+    console.log(user + ':' + msg);
+  });
+}
+
+
+var users = [];
+
+//users[3] = connecttwitch('elded');
+//users[6] = connecttwitch('yumyumyu77');
+
+
+const youtube = require('./router/youtubeconfig');
+
+function connectyoutube(videoid)
+{
+  var youtubeclient = youtube.create(videoid,function(config){
+
+    setInterval(function(){
+      //console.log('working');
+      //console.log(config);
+  
+      youtube.getchat(config,function(chatlist){
+
+        console.log(chatlist);
+
+      });
+      
+  
+    },2000)
+
+  });
+
+  
+
+
+  
+}
+
+users[8] = connectyoutube('W9jr3QypVCg');
