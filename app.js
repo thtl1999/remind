@@ -24,7 +24,7 @@ app.use('/js', express.static('./static/js'))
 
 /* Get 방식으로 / 경로에 접속하면 실행 됨 */
 app.get('/', function(request, response) {
-  fs.readFile('./static/index.html', function(err, data) {
+  fs.readFile('./static/midtest.html', function(err, data) {
     if(err) {
       response.send('에러')
     } else {
@@ -72,6 +72,12 @@ io.sockets.on('connection', function(socket) {
     /* 모든 소켓에게 전송 */
     io.sockets.emit('draw', data)
   })
+
+
+  testfunc = function(data){
+    io.sockets.emit('answer',data);
+  }
+
 
 
 })
@@ -127,6 +133,7 @@ function connecttwitch(userid,roomid,answerword)
     var msg = message.trim();
     console.log(user + ':' + msg);
     if (msg == answerword){
+      rooms['123'].answer(io,user + '님이 정답을 맞췄습니다!' + msg);
       //some function with roomid
       twitchclient.disconnect();
     }
@@ -138,7 +145,7 @@ function connecttwitch(userid,roomid,answerword)
 var users = [];
 
 //users['3'] = connecttwitch('elded');
-users['6'] = connecttwitch('hanryang1125',345,'ㅠㅠ');
+users['6'] = connecttwitch('thtl1999',345,'아메리카');
 
 
 const youtube = require('./router/youtubeconfig');
@@ -155,8 +162,9 @@ function connectyoutube(videoid,roomid,answerword)
       //console.log(t);
       lasttime = t;
       chatlist.forEach(element => {
-        console.log(element.msg);
+        console.log(element.author + ':' + element.msg);
         if (element.msg == answerword){
+          rooms['123'].answer(io,element.author + '님이 정답을 맞췄습니다!' + element.msg);
           //somefunction with room id
           clearInterval(intervalid);
         }  
@@ -166,11 +174,20 @@ function connectyoutube(videoid,roomid,answerword)
     },2000)
 
   });
-  
+
 }
 
-//users['123'] = connectyoutube('W9jr3QypVCg',123,'ㅇㅇ');
+//users['123'] = connectyoutube('YCDezUvIOUs',123,'아메리카');
 
+var rooms = [];
+rooms['123'] = require('./router/sockettest.js');
+
+
+/*
+setInterval(function(){
+  rooms['123'].answer(io,'asd');
+},1000)
+*/
 
 
 
