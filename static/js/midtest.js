@@ -10,7 +10,7 @@ window.onload = function () {
   var mouseY = 0;
   context.strokeStyle = 'black'; // initial brush color
   context.lineWidth = 1; // initial brush width
-  var isDrawing = false;
+  var isDrawing = 0;
 
 
   // Handle Colors
@@ -18,6 +18,7 @@ window.onload = function () {
 
   colors.addEventListener('click', function(event) {
     context.strokeStyle = event.target.value || 'black';
+    isDrawing = 0;
   });
 
   // Handle Brushes
@@ -25,23 +26,26 @@ window.onload = function () {
 
   brushes.addEventListener('click', function(event) {
     context.lineWidth = event.target.value || 1;
+    isDrawing = 0;
   });
 
   // Mouse Down Event
   canvas.addEventListener('mousedown', function(event) {
     setMouseCoordinates(event,this);
-    isDrawing = true;
+    isDrawing = 1;
 
     // Start Drawing
     context.beginPath();
-    context.moveTo(mouseX, mouseY);
+    context.moveTo(mouseX - 1, mouseY);
+    context.lineTo(mouseX, mouseY);
+    context.stroke();
   });
 
   // Mouse Move Event
   canvas.addEventListener('mousemove', function(event) {
     setMouseCoordinates(event,this);
 
-    if(isDrawing){
+    if(isDrawing == 1){
       context.lineTo(mouseX, mouseY);
       context.stroke();
     }
@@ -50,7 +54,17 @@ window.onload = function () {
   // Mouse Up Event
   canvas.addEventListener('mouseup', function(event) {
     setMouseCoordinates(event,this);
-    isDrawing = false;
+    isDrawing = 0;
+  });
+
+  canvas.addEventListener('mouseleave', function(event) {
+    isDrawing = -1;
+  })
+
+  canvas.addEventListener('mouseenter', function(event) {
+    setMouseCoordinates(event,this);
+    if (isDrawing == -1) isDrawing = 1;
+    context.moveTo(mouseX, mouseY);
   });
 
   // Handle Mouse Coordinates
@@ -66,6 +80,7 @@ window.onload = function () {
 
   clearButton.addEventListener('click', function() {
     context.clearRect(0, 0, canvas.width, canvas.height);
+    isDrawing = 0;
   });
 
   // Handle Save Button
