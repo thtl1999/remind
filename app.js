@@ -145,7 +145,7 @@ function connecttwitch(userid,roomid,answerword)
 var users = [];
 
 //users['3'] = connecttwitch('elded');
-users['6'] = connecttwitch('thtl1999',345,'아메리카');
+//users['6'] = connecttwitch('thtl1999',345,'아메리카');
 
 
 const youtube = require('./router/youtubeconfig');

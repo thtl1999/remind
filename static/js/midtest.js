@@ -52,13 +52,20 @@ window.onload = function () {
   });
 
   // Mouse Up Event
+  /*
   canvas.addEventListener('mouseup', function(event) {
     setMouseCoordinates(event,this);
     isDrawing = 0;
   });
+  */
+
+  window.addEventListener('mouseup', function(event){
+    setMouseCoordinates(event,this);
+    isDrawing = 0;
+  })
 
   canvas.addEventListener('mouseleave', function(event) {
-    isDrawing = -1;
+    if (isDrawing == 1) isDrawing = -1;
   })
 
   canvas.addEventListener('mouseenter', function(event) {
