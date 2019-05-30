@@ -1,19 +1,110 @@
-
-* {
-  box-sizing: border-box;
+.container{
+    display:flex;
+    flex-direction: column;
+    position:absolute;
+    height: 97%;
+    width: 97%;
+    background-image: url(../Logo/Background_GameRoom.png);
+    background-size: cover;
 }
 
-main {
-  width: 800px;
-  border: 1px solid #e0e0e0;
-  margin: 0 auto;
-  display: flex;
-  flex-grow: 1;
+div {
+/*    border: 1px solid gray;*/
+    border-radius: 2em;
 }
 
-.left-block {
+.head{
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.imagestyle1{
+    width: auto;
+    height: 50px;
+}
+
+.headitems{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.headitems:nth-child(3){
+    flex: 1;
+    text-align:center;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    flex: 1;  
+}
+
+.middle{
+    /*flex-basis: 500px;*/
+/*    flex: 2;*/
+/*    flex-shrink: 800px;*/
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+}
+
+.side{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.players{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.score{
+    flex-basis: 30px;
+    background-image: url(../Logo/cnt_score.png);
+    background-size: cover;
+    border-top: 2px solid gray;
+}
+
+.chara{
+    flex: 1;
+}
+
+.wordarea{
+    flex: 1;
+    text-align: center;
+    border: 2px outset gray;
+}
+
+.canvasarea{
+/*    flex: 1;*/
+    display: flex;
+    flex-direction: row;
+    height: 400px;
+    border: 2px solid gray;
+    border-radius: 0;
+    background-color: white;
+}
+
+.typingarea{
+    flex-basis: 40px;
+}
+
+input{
+    width:100%;
+    height: 100%;
+}
+
+
+
+
+/*paint tool css*/
+
+.painttool {
   width: 160px;
-  border-right: 1px solid #e0e0e0;
+/*  border-right: 1px solid #e0e0e0;*/
 }
 
 .colors {
@@ -220,7 +311,7 @@ main {
   font-size: 16px;
 }
 
-.right-block {
+.canvasblock {
   width: 640px;
 }
 

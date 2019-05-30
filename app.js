@@ -1,4 +1,4 @@
-/* 설치한 express 모듈 불러오기 */
+﻿/* 설치한 express 모듈 불러오기 */
 const express = require('express')
 
 /* 설치한 socket.io 모듈 불러오기 */
@@ -21,10 +21,12 @@ const io = socket(server)
 
 app.use('/css', express.static('./static/css'))
 app.use('/js', express.static('./static/js'))
+app.use('/Logo', express.static('./static/Logo'))
+
 
 /* Get 방식으로 / 경로에 접속하면 실행 됨 */
 app.get('/', function(request, response) {
-  fs.readFile('./static/midtest.html', function(err, data) {
+  fs.readFile('./static/Game2.html', function(err, data) {
     if(err) {
       response.send('에러')
     } else {
@@ -79,6 +81,16 @@ io.sockets.on('connection', function(socket) {
   }
 
 
+  //new paint
+  socket.on('drawline', function(data) {
+    /* 소켓에게 전송 except sender*/
+    socket.broadcast.emit('drawline',data);
+  })
+
+  socket.on('clearcanvas', function() {
+    /* 소켓에게 전송 except sender*/
+    socket.broadcast.emit('clearcanvas');
+  })
 
 })
 
@@ -88,36 +100,6 @@ server.listen(8080, function() {
 })
 
 
-var mongoose = require('mongoose');
-
-// [ CONFIGURE mongoose ]
-
-// CONNECT TO MONGODB SERVER
-var db = mongoose.connection;
-db.on('error', console.error);
-db.once('open', function(){
-    // CONNECTED TO MONGODB SERVER
-    console.log("Connected to mongod server");
-});
-
-mongoose.connect('mongodb://localhost/remind');
-
-var Word = require('./models/word');
-//var router = require('./router')(app, Book);
-
-function Getaword(){
-  Word.count(function(err, count){
-    if(err) console.log('get a word error: count');
-    var rand = Math.floor(Math.random() * count);
-    Word.findOne().skip(rand).exec(
-      function (err, result){
-        console.log(result);
-        return result;
-      })
-  })
-}
-
-Getaword();
 
 const twitch = require('./router/twitchconfig');
 
@@ -189,5 +171,11 @@ setInterval(function(){
 },1000)
 */
 
+
+const Word = require('./router/newworddb');
+
+var test = Word.Getwords(3);
+
+console.log(test);
 
 
