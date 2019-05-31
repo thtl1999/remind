@@ -1,9 +1,7 @@
 function makes(player,str){
     var ply = document.getElementById(player);
-    console.log(ply.offsetWidth);
-    console.log(ply.offsetLeft);
-    console.log(ply.offsetTop);
     var img = document.createElement("img");
+    var txt = document.createElement("figure");
     img.setAttribute("width", "150");
     img.setAttribute("height", ply.offsetHeight/2);
     img.style.position = 'absolute';
@@ -19,10 +17,17 @@ function makes(player,str){
         img.style.left = String(ply.offsetLeft + ply.offsetWidth/2 - img.width) + 'px';
     }
     
+    txt.style.position = 'absolute';
+    txt.style.top = img.style.top;
+    txt.style.left = img.style.left
+    txt.innerHTML = str;
+    
     document.body.appendChild(img);
+    document.body.appendChild(txt);
     
     setTimeout(function() {
         img.remove();
+        txt.remove();
     }, 2000);
     
     
