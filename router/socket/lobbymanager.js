@@ -99,14 +99,26 @@ LobbyManager.prototype.canJoinLobby = function() {
 LobbyManager.prototype.startLobby = function(sessionID, option) {
 	var self = this;
 	var lobby = self.gameLobbys[sessionID]
-	lobby.initGame(option.maxRound, option.maxTime)
+	if(lobby)
+		lobby.initGame(option.maxRound, option.maxTime)
 }
 
 // 로비 시작 함수
 LobbyManager.prototype.startLobby2 = function(sessionID) {
 	var self = this;
 	var lobby = self.gameLobbys[sessionID]
-	lobby.nextRound();
+	if(lobby)
+		lobby.nextRound();
+}
+
+// 로비 탈출 함수
+LobbyManager.prototype.disconnectLobby = function(lobby, socket, sid) {
+	var self = this;
+	if(!lobby)
+		return;
+	if(!sid)
+		return;
+	lobby.leaveUser(socket, sid);
 }
 
 

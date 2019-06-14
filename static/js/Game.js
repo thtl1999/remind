@@ -25,13 +25,23 @@ socket.on('init_Game', function(data) {
   startbutton();
 })
 
+socket.on('update_disconnect', function(data) {
+  removechara('player' + String(data+1));
+  removescore('p' + String(data+1));
+  playerName[data] = null;
+  charaNum[data] = null;
+})
 
 socket.on('update_Game_timer', function(data) {
   //console.log("남은 시간 정보: " + data)
   timetick(data);
 })
 
-
+socket.on('update_Game_end', function(data) {
+  //console.log("남은 시간 정보: " + data)
+  document.getElementById("answerword").innerHTML = data.answerword;
+  document.getElementById("mineword").innerHTML = data.mineword;
+})
 
 socket.on('update_Game_score', function(data) {
   //console.log("현재 스코어 정보: " + data)
@@ -47,7 +57,11 @@ socket.on('update_Game_score_inform', function(data) {
 })
 
 socket.on('update_Game_score_inform2', function(data) {
-  inform(playerName[data.mineNum] + "님이 '" + data.mine + "', 지뢰를 터트리셨습니다!<br><br>" + playerName[data.drawerNum] + ": -50");
+  inform(playerName[data.mineNum] + "님이 '" + data.mine + "', 지뢰를밟으셨습니다!<br><br>" + playerName[data.drawerNum] + ": -50");
+})
+
+socket.on('update_Game_score_inform3', function(data) {
+  inform("트위치/유튜브의 " + data.name + "님이 '" + data.answer + "', 맞추셨습니다!<br><br>" + playerName[data.drawerNum] + ": +100");
 })
 
 
@@ -400,5 +414,14 @@ function send(message) {
   socket.on('clearcanvas',function(){
     clearcanvas();
   })
+
+  function twitch(txt) {
+    socket.emit('twitch', txt);
+  }
+
+  function youtube(txt) {
+    socket.emit('youtube', txt);
+  }
+
   
 //}

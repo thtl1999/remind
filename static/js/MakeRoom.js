@@ -12,6 +12,8 @@ socket.on('init_MakeRoom', function(data) {
   ishost = data.ishost;
   roomsid = data.roomsid;
   charaNum = data.charaNum;
+  if(!charaNum)
+    charaNum = 5;
   playerName = data.playerName;
   refreshCharacter();
 })

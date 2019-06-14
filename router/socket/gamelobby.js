@@ -99,7 +99,14 @@ GameLobby.prototype.nextRound = function() {
 	
 		if(self.timeNum < 1) {
 			clearInterval(self.gameInterval);
-			self.stopRound()
+			
+			self.io.sockets.to(self.host).emit('update_Game_end', {
+				answerword: self.answer, 
+				mineword: self.mine
+			});
+			setTimeout(function(){
+				self.stopRound()
+			}, 4000);
 		}
 		
 		self.io.sockets.to(self.host).emit('update_Game_timer', self.timeNum);
@@ -115,7 +122,7 @@ GameLobby.prototype.nextRound = function() {
 // 다음 drawer의 번호를 계산하여 반환
 GameLobby.prototype.nextDrawer = function() {
 	var self = this;
-	var nextDrawerNum = (self.drawerNum + 1) % 6;
+	var nextDrawerNum = (self.drawerNum + 1)%6;
 
 	// 단순하게 (최근번호+1)%(플레이어 수)를 반환하는 결과와 비슷
 	// 플레이어 수는 중간에 나가는 플레이어로 인해 유동적이기 때문
@@ -154,6 +161,7 @@ GameLobby.prototype.isMine = function(message) {
 //점수 증가 함수 정답시 호출
 GameLobby.prototype.incScore = function(player) {
 	var self = this;
+	self.changeState(State.STATES.STOP);
 
 	for(var i = 0 ; i < 6 ; i++) {
 		if(self.players[i] == player) {
@@ -177,6 +185,28 @@ GameLobby.prototype.incScore = function(player) {
 			return;
 		}
 	}
+}
+
+//트위치/유튜브가 정답시 호출
+GameLobby.prototype.sameScore = function(data) {
+	var self = this;
+	self.changeState(State.STATES.STOP);
+
+	self.scores[self.drawerNum] += 100
+	self.io.sockets.to(self.host).emit('update_Game_score', self.scores);
+	self.io.sockets.to(self.host).emit('update_Game_score_inform3', {
+		name: data,
+		drawerNum: self.drawerNum,
+		answer: self.answer
+	});
+
+	if(self.gameInterval)
+		clearInterval(self.gameInterval);
+
+	setTimeout(function(){
+		self.stopRound()		// 정답을 맞춘 사람이 있으므로 다음 라운드
+	}, 4000);
+
 }
 
 //점수 감소 함수 지뢰시 호출
@@ -250,16 +280,18 @@ GameLobby.prototype.joinUser = function(socket, PW) {
 
 }
 
-GameLobby.prototype.leaveUser = function(socket) {
+GameLobby.prototype.leaveUser = function(socket, sid) {
 	var self = this;
-	var sid = socket.handshake.sessionID;
-	//socket.leave();
+
 	for(var i in self.players) {
 		if(self.players[i] == sid) {
 			self.players[i] = null;
-			self.socket[i] = null;
-			self.scores = -1;
+			self.sockets[i] = null;
+			self.scores[i] = -1;
 			socket.leave(self.host);
+			console.log("도망자 처단 완료.");
+			console.log(i);
+			self.io.sockets.to(self.host).emit('update_disconnect', Number(i));
 			return;
 		}
 	}

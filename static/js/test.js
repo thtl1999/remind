@@ -74,6 +74,15 @@ function enterkey(e){
     }
 }
 
+function removechara(pid) {
+    document.getElementById(pid).style.removeProperty("background-image");
+}
+
+function removescore(pi) {
+    document.getElementById(pi).innerHTML = '';
+
+}
+
 function assignchara(pid,imgname){
     //example) imgname = 'Character_1';, pid = 'player4';
     document.getElementById(pid).style.backgroundImage = "url('../Logo/" + imgname + ".png')";
@@ -189,6 +198,11 @@ function streaminginput() {
         
         console.log(txt);
         console.log(type);
+
+        if(type == 'youtube')
+            youtube(txt);
+        if(type == 'twitch')
+            twitch(txt);
     }
     
 }
