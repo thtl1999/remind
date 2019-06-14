@@ -140,11 +140,10 @@ io.sockets.on('connection', function(socket) {
     lobbyManager.joinLobby(socket, roomsid)    // 로비매니저에게 joinlobby 요청
     socket.join(roomsid);   // 소켓 룸 조인
     socket.name = socket.handshake.session.userName;    // 이름 백업
-    
-    if(!sessions_playerName[sid]){
-sessions_playerName[sid] = "손님" + String(Math.floor(Math.random() * 1000) + 1);}
-      
-      
+
+    if(!sessions_playerName[sid])
+      sessions_playerName[sid] = "손님" + String(Math.floor(Math.random() * 1000) + 1);
+
     //새로 로드된 MakeRoom.html 초기화
     socket.emit('init_MakeRoom', {  ishost: !!(socket.handshake.sessionID == sessions[sid]),
                                     roomsid: roomsid,
@@ -290,6 +289,7 @@ sessions_playerName[sid] = "손님" + String(Math.floor(Math.random() * 1000) + 
 
     // 전송받은 메세지가 현 라운드의 정답이라면,
     if(lobby.isAnswer(data.message)) {
+      lobby.changeState(2);
       lobby.incScore(sid);
       //emit
     }
@@ -310,10 +310,22 @@ sessions_playerName[sid] = "손님" + String(Math.floor(Math.random() * 1000) + 
 
   /* 접속 종료 */
   socket.on('disconnect', function() {
+
     //if(socket.handshake.session.userName)
     //  delete socket.handshake.session.userName;
     //delete sessions[socket.handshake.sessionID]
     //console.log(socket.name + '님이 나가셨습니다.')
+
+    var sid = socket.handshake.sessionID;       // 전송받은 메세지가 보내진 세션id
+    var roomsid = sessions[sid];                   // 전송받은 메세지가 보내질 룸의 세션ID
+    var lobby = lobbyManager.gameLobbys[roomsid];   // 전송받은 메세지가 보내질 로비
+
+    if(lobby) {
+      if(lobby.state > 1) {
+        console.log("이놈이무단탈주했다!!!!!!!!!!!!!!!!!");
+        lobbyManager.disconnectLobby(lobby, socket, sid)
+      }
+    }
   })
 
   socket.on('draw', function(data) {
@@ -338,6 +350,37 @@ sessions_playerName[sid] = "손님" + String(Math.floor(Math.random() * 1000) + 
     socket.broadcast.to(sessions[socket.handshake.sessionID]).emit('clearcanvas');
   })
 
+
+  socket.on('twitch', function(data) {
+    var sid = socket.handshake.sessionID;       // 전송받은 메세지가 보내진 세션id
+    var roomsid = sessions[sid];                   // 전송받은 메세지가 보내질 룸의 세션ID
+    var lobby = lobbyManager.gameLobbys[roomsid];   // 전송받은 메세지가 보내질 로비
+
+    if(!lobby)
+      return;
+
+    if(lobby.state == 0)
+      return;
+
+    connecttwitch(data, lobby);
+
+  })
+
+  socket.on('youtube', function(data) {
+    var sid = socket.handshake.sessionID;       // 전송받은 메세지가 보내진 세션id
+    var roomsid = sessions[sid];                   // 전송받은 메세지가 보내질 룸의 세션ID
+    var lobby = lobbyManager.gameLobbys[roomsid];   // 전송받은 메세지가 보내질 로비
+
+    if(!lobby)
+      return;
+
+    if(lobby.state == 0)
+      return;
+
+    connectyoutube(data, lobby);
+
+  })
+
 })
 
 /* 서버를 8080 포트로 listen */
@@ -349,7 +392,7 @@ server.listen(8080, function() {
 
 const twitch = require('./router/twitchconfig');
 
-function connecttwitch(userid,roomid,answerword)
+function connecttwitch(userid, lobby)
 {
     var twitchclient = twitch.create(userid);
 
@@ -360,8 +403,9 @@ function connecttwitch(userid,roomid,answerword)
     var user = userstate.username;
     var msg = message.trim();
     console.log(user + ':' + msg);
-    if (msg == answerword){
-      rooms['123'].answer(io,user + '님이 정답을 맞췄습니다!' + msg);
+    if (lobby.isAnswer(msg)){
+      lobby.sameScore(user);
+      //rooms['123'].answer(io,user + '님이 정답을 맞췄습니다!' + msg);
       //some function with roomid
       twitchclient.disconnect();
     }
@@ -376,11 +420,9 @@ var users = [];
 //users['6'] = connecttwitch('thtl1999',345,'아메리카');
 
 
-
-
 const youtube = require('./router/youtubeconfig');
 
-function connectyoutube(videoid,roomid,answerword)
+function connectyoutube(videoid, lobby)
 {
   youtube.create(videoid,function(config){
 
@@ -393,8 +435,9 @@ function connectyoutube(videoid,roomid,answerword)
       lasttime = t;
       chatlist.forEach(element => {
         console.log(element.author + ':' + element.msg);
-        if (element.msg == answerword){
-          rooms['123'].answer(io,element.author + '님이 정답을 맞췄습니다!' + element.msg);
+        if (lobby.isAnswer(element.msg)){
+          lobby.sameScore(element.author);
+          //rooms['123'].answer(io,element.author + '님이 정답을 맞췄습니다!' + element.msg);
           //somefunction with room id
           clearInterval(intervalid);
         }  
