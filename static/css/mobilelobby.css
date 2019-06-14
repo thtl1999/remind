@@ -1,0 +1,112 @@
+html,body{
+    height: 100%;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    background-image: url(../Logo/Background_GameRoom.png);
+    background-size:100% 100%;
+    height: 100%;
+}
+
+div {
+/*    border: 1px solid gray;*/
+/*    border-radius: 2em;*/
+}
+
+.title{
+    height: 150px;
+    background-image: url(../Logo/RE-MIND_logo.png);
+    background-size:100% 100%;
+    
+}
+
+.options{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.link{
+    flex: 1;
+}
+
+
+.option{
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    background-image: url(../Logo/Background_Room.png);
+    background-size:100% 100%;
+    
+}
+
+.optionname{
+    flex: 1;
+    text-align: center;
+    font-size: 7vw;
+    
+}
+
+.optionvalue{
+    flex: 1;
+    display: flex;
+}
+
+.leftb{
+    flex: 1;
+    background-image: url(../Logo/left_arrow.png);
+    background-size:100% 100%;
+}
+
+.v{
+    flex:2;
+    text-align: center;
+    font-size: 16vw;
+}
+
+.rightb{
+    flex:1;
+    background-image: url(../Logo/right_arrow.png);
+    background-size:100% 100%;
+}
+
+.link{
+    display:flex;
+    flex-direction: column;
+}
+
+.t1{
+    flex:1;
+    font-size: 6vw;
+}
+
+.t2{
+    flex:1;
+    font-size: 10vw;
+}
+
+.t3{
+    flex:1;
+    display:flex;
+}
+
+
+
+
+.ground{
+    background-image: url(../Logo/Grass.png);
+    background-size:100% 100%;
+    height: 150px;
+    
+}
+
+.img{
+    margin: auto;
+    max-height: 100%;
+    max-width: 100%;
+}

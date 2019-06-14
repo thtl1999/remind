@@ -7,24 +7,27 @@
 	<title>Mainpage after login</title>
 	<link href="MainPage_AfterLogin.css" rel="stylesheet" type="text/css">
 
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/js/MainPage.js"></script>
+
 	<script type="text/javascript">
 		var images = new Array("Character_3.png", "Character_2.png", "Character_1.png");
-		var i=5;
-		var size=3;
-		function makeRoomFunction(){
-			var temp = document.getElementById("makeRoom");
-			temp.href+="?player="+String(i);
-		}
-		function rightChangeImg(){
-			var img1=document.getElementById('character');
-			img1.src="Logo/"+images[(++i) % size];
-		}
-		function leftChangeImg(){
-			if(i==0)
-				i+=size;
-			var img1=document.getElementById('character');
-			img1.src="Logo/"+images[(--i) % size];
-		}
+        function makeRoomFunction(){
+            var temp = document.getElementById("makeRoom");
+            //temp.href+="?player="+String(i);
+            makeLobby();
+        }
+        function rightChangeImg(){
+            var img1=document.getElementById('character');
+            img1.src="Logo/"+images[(++charaNum) % size];
+
+        }
+        function leftChangeImg(){
+            if(charaNum==0)
+                charaNum+=size;
+            var img1=document.getElementById('character');
+            img1.src="Logo/"+images[(--charaNum) % size];
+        }
 	</script>
 
 </head>

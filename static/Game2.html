@@ -3,46 +3,50 @@
 <head>
     <meta charset="utf-8">
     <title>RE:MIND GAME</title>
-    <link rel="stylesheet" href="./css/game.css">
+    <link rel="stylesheet" href="/css/game.css">
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="head">
             <div class="headitems">
-                <img class="imagestyle1" src="Logo/sound_off.png">
+                <img class="imagestyle1" id='mutebtn' src="/Logo/sound_off.png">
             </div>
             <div class="headitems">
-                <img class="imagestyle1" src="Logo/Logo_Small.png">
+                <img class="imagestyle1" src="/Logo/Logo_Small.png">
+            </div>
+            <div class="headitems" id='timer'>
+               time
             </div>
             <div class="headitems">
-                <img class="imagestyle1" src="Logo/timer.png">
+                <img class="imagestyle1" src="/Logo/cnt_mobile.png">
             </div>
             <div class="headitems">
-                <img class="imagestyle1" src="Logo/cnt_mobile.png">
-            </div>
-            <div class="headitems">
-                <img class="imagestyle1" src="Logo/btn_live.png">
+                <img class="imagestyle1" id='streambtn' src="/Logo/btn_live.png">
             </div>
         </div>
         <div class="content">
             <div class="side">
                 <div class="players">
-                    <div class="score">a</div>
-                    <div class="chara" id="player1">b</div>
+                    <div class="score" id="p1"></div>
+                    <div class="chara" id="player1"></div>
                 </div>
                 <div class="players">
-                    <div class="score">a</div>
-                    <div class="chara" id="player2">b</div>
+                    <div class="score" id="p2"></div>
+                    <div class="chara" id="player2"></div>
                 </div>
                 <div class="players">
-                    <div class="score">a</div>
-                    <div class="chara" id="player3">b</div>
+                    <div class="score" id="p3"></div>
+                    <div class="chara" id="player3"></div>
                 </div>
             </div>
             <div class="middle">
-                <div class="wordarea" id="answerword">h</div>
-                <div class="wordarea" id="mineword">j</div>
+                <div class="wordarea">
+                    <span id="answerword">정답</span>
+                </div>
+                <div class="wordarea">
+                    <span id="mineword">유사어</span>
+                </div>
                 <div class="canvasarea">
                     <div class="canvasblock">
                         <canvas id="paint-canvas" width="640" height="400"></canvas>
@@ -82,10 +86,10 @@
                         </div>
                         <div class="brushes">
                           <button type="button" value="1"></button>
-                          <button type="button" value="2"></button>
                           <button type="button" value="3"></button>
-                          <button type="button" value="4"></button>
                           <button type="button" value="5"></button>
+                          <button type="button" value="7"></button>
+                          <button type="button" value="9"></button>
                         </div>
                         <div class="buttons">
                           <button id="clear" type="button">Clear</button>
@@ -94,26 +98,29 @@
                     </div>
                 </div>
                 <div class="typingarea">
-                    <input type="text">
+                    <input class="t1" id="txtbox" type="text" onkeypress="return enterkey(event)">
+                    <input class="t2" type='button' onclick='input_Text()' value='전송!'/>
                 </div>
             </div>
             <div class="side">
                 <div class="players">
-                    <div class="score">a</div>
-                    <div class="chara" id="player4">b</div>
+                    <div class="score" id="p4"></div>
+                    <div class="chara" id="player4"></div>
                 </div>
                 <div class="players">
-                    <div class="score">a</div>
-                    <div class="chara" id="player5">b</div>
+                    <div class="score" id="p5"></div>
+                    <div class="chara" id="player5"></div>
                 </div>
                 <div class="players">
-                    <div class="score">a</div>
-                    <div class="chara" id="player6">b</div>
+                    <div class="score" id="p6"></div>
+                    <div class="chara" id="player6"></div>
                 </div>
             </div>
         </div>
     </div>
-<script  src="js/midtest.js"></script>
-<script src="js/test.js"></script>
+<!--<script src="/js/midtest.js"></script>-->
+<!--<script src="/js/test.js"></script>-->
 </body>
+<script src="/js/Game.js"></script>
+<script src="/js/test.js"></script>
 </html>

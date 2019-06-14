@@ -66,6 +66,7 @@ div {
     background-image: url(../Logo/cnt_score.png);
     background-size: cover;
     border-top: 2px solid gray;
+    text-align: center;
 }
 
 .chara{
@@ -76,6 +77,18 @@ div {
     flex: 1;
     text-align: center;
     border: 2px outset gray;
+    display: flex;
+}
+
+#answerword{
+    margin:auto;
+    font-size: 4vw;
+    color: blue;
+}
+#mineword{
+    margin:auto;
+    font-size: 4vw;
+    color: red;
 }
 
 .canvasarea{
@@ -90,14 +103,42 @@ div {
 
 .typingarea{
     flex-basis: 40px;
+    display: flex;
+    flex-direction: row;
+}
+
+.t1{
+    flex: 3;
+}
+
+.t2{
+    flex: 1;
 }
 
 input{
-    width:100%;
-    height: 100%;
+/*    width:100%;*/
+/*    height: 100%;*/
 }
 
+.chara{
+/*    background-image: url(../Logo/Character_1.png);*/
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
+#timer{
+    background-image: url(../Logo/timer.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: xx-large;
+    color: white;
+}
+
+#streambtn{
+    
+}
 
 
 /*paint tool css*/

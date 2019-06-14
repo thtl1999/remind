@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/mobilemain.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    
+</head>
+<body>
+<div class="container">
+    <div class="title">
+    </div>
+    <div class="buttons">
+        <div class="btn">
+            <div class="b">
+                <img class="img"  onclick="fastStart()" src="/Logo/start.png"/>
+            </div>
+        </div>
+        <div class="btn">
+            <div class="b">
+                <img class="img"  onclick="makeLobby()" src="/Logo/Room.png"/>
+            </div>
+        </div>
+        <div class="btn">
+            <div class="b">
+                <img class="img"  id="login_test" src="/Logo/login.png"/>
+            </div>
+        </div>
+    </div>
+    <div class="chara">
+        <div class="cdiv">
+            <div id="leftb">
+                <img class="img"  id="login_test" onclick="changeCharacter(-1)" src="/Logo/left_arrow.png"/>
+            </div>
+        </div>
+        <div class="cdiv">
+            <div id="c">
+                <img class="img"  id="cimg" src="/Logo/Character_1.png"/>
+            </div>
+        </div>
+        <div class="cdiv">
+            <div id="rightb">
+                <img class="img"  id="login_test" onclick="changeCharacter(1)" src="/Logo/right_arrow.png"/>
+            </div>
+        </div>
+    </div>
+    <div class="ground">
+    </div>
+</div>
+</body>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+    <script src="/js/firebase.js"></script>
+    <script src="/js/mobilemain.js"></script>
+</html>

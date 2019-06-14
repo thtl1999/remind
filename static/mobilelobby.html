@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/mobilelobby.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    
+</head>
+<body>
+<div class="container">
+    <div class="title">
+    </div>
+    <div class="options">
+        <div class="option">
+            <div class="optionname">
+                라운드
+            </div>
+            <div class="optionvalue">
+                <div class="leftb" onclick='roundf(-1)'>
+                </div>
+                <div class="v" id="roundv">
+                    1
+                </div>
+                <div class="rightb" onclick='roundf(1)'>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="options">
+        <div class="option">
+            <div class="optionname">
+                그림그리는 시간
+            </div>
+            <div class="optionvalue">
+                <div class="leftb" onclick='timef(-10)'>
+                </div>
+                <div class="v" id="timev">
+                    30
+                </div>
+                <div class="rightb" onclick='timef(10)'>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="link">
+        <input class="t1" id="txtbox" type="text" readonly value="addresssdfsdfsdfsdfsdfsdfsdfsdfsdfsdfgsdhsfhsdhsdhsdhsdhsdfgsdf">
+        <input class="t2" type='button' onclick='copyadd()' value='복사하기'/>
+        <div class="t3">
+            <img class="img" src="/Logo/start_game.png" onclick="start()">
+        </div>
+    </div>
+    <div class="ground">
+    </div>
+</div>
+</body>
+    <script src="/js/mobilelobby.js"></script>
+</html>
