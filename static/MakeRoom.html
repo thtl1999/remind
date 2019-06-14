@@ -7,29 +7,10 @@
 <title>Create Room</title>
 <link href="/css/MakeRoom.css" rel="stylesheet" type="text/css">
 
-<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 <script src="/js/MakeRoom.js"></script>
 
-<script type="text/javascript">
-	var images = new Array("Character_3.png", "Character_2.png", "Character_1.png");
-	//var url_string = window.location.href;
-	var size=3;
-	//url = new URL(url_string);
-	//var player = url.searchParams.get("player");
-	//onsole.log(player);
-	
-	function refreshCharacter(){
-		document.getElementById('character2').src = "/Logo/"+images[charaNum%size];
-	}
 
-	function copyToClipboard() {
-	    let textarea = document.getElementById("copy_link");
-	    textarea.select();
-	    document.execCommand('copy');
-	    alert("URL is copied to clipboard");
-	}
-
-</script>
 <style>
     .copy_link{
         font-size: 25px;
@@ -94,7 +75,7 @@
 	  	  	<img class="img_fig1" src="/Logo/Fig1.png"  alt=""/> 
 	  	  	<img class="img_fig2" src="/Logo/Fig2.png"  alt=""/>
 	      	  	<!--<img class="copy_link" src="/Logo/copy_link.png" alt=""/>  </h3>-->
-                <textarea class="copy_link" id="copy_link" placeholder="copy URL" readonly="readonly">Hello World!</textarea> 
+                <textarea class="copy_link" id="copy_link" cols="2" rows="2" font-size= "1px" readonly="readonly">Hello World!</textarea> 
           <button id="copyButton" onclick="copyToClipboard()">Copy</button>
 		  <h3 class="character" style="float:left" >
 
@@ -105,6 +86,7 @@
 	  		<img class="img_fig4" src="/Logo/Fig4.png" alt=""/> 
 		  </h3>
 	  </h3>
+        </h3>
 	</section>
   <div class="main" style="clear:both"> </div>
   <footer class="secondary_header footer">
@@ -114,5 +96,27 @@
 <div class="copyright">&copy;2019 - REMIND</div>
   </footer>
 </div>
+<script type="text/javascript">
+	var images = new Array("Character_3.png", "Character_2.png", "Character_1.png");
+	//var url_string = window.location.href;
+	var size=3;
+	//url = new URL(url_string);
+	//var player = url.searchParams.get("player");
+	//onsole.log(player);
+	
+	function refreshCharacter(){
+		document.getElementById('character2').src = "/Logo/"+images[charaNum%size];
+	}
+
+	function copyToClipboard() {
+	    let textarea = document.getElementById("copy_link");
+	    textarea.select();
+	    document.execCommand('copy');
+	    alert("URL is copied to clipboard");
+	}
+    
+    document.getElementById('copy_link').value = document.URL;
+
+</script>
 </body>
 </html>
